@@ -9,9 +9,7 @@ function vuelos() {
     } else {
         let json = JSON.stringify({ fecha: fecha, origin: origin, destino: destino });
         $.cookie('json', `${json}`, { expires: 1, path: '/' });
-        location.href = "vuelos";
-
-
+        location.href = "vuelos.html";
 
     }
 

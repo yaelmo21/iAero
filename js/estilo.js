@@ -1,3 +1,6 @@
+$(document).ready(function() {
+    new WOW().init();
+});
 $.noConflict();
 $('#datepicker ').datepicker({
     locale: 'es',
