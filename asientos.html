@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="Spanish">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iAero | Asientos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="assets/fontawesome-5.13.0/css/all.css">
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/bootstrap-datepicker.standalone.css">
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.18.0/css/mdb.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/main.css">
+
+
+
+    <link rel="stylesheet" href="css/main.css">
+
+</head>
+
+
+
+
+<body>
+    <!--Navbar-->
+    <nav class="navbar navbar-expand-lg navbar-dark primary-color">
+
+        <!-- Navbar brand -->
+        <a class="navbar-brand" href="#"><i class="fas fa-plane-arrival" style="font-size: 50px;"></i></a>
+
+        <!-- Collapse button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav" aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+        <!-- Collapsible content -->
+        <div class="collapse navbar-collapse" id="basicExampleNav">
+
+            <!-- Links -->
+            <ul class="navbar-nav mr-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html"><i class="fas fa-home"></i><span class="col">Inicio</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="vuelos.html"><i class="fas fa-plane"></i><span class="col">Vuelos</span></a>
+                </li>
+
+
+
+
+            </ul>
+            <!-- Links -->
+
+        </div>
+        <!-- Collapsible content -->
+
+    </nav>
+    <!--/.Navbar-->
+    <div class="p-4 mb-2 indigo text-white">
+        <h3>Selecciona tu asiento</h3>
+    </div>
+
+    <div id="asientos" class=" p-3" style="margin-top: 20px;">
+        <div v-if="asientos.message==='correct' ">
+            <div class="container ">
+                <div class="row row-cols-2 ">
+
+                    <div class="col text-white " v-for="item in asientos.data ">
+                        <div style="margin-bottom: 20px; margin-top: 20px;" class="mr-md-2 p-3 text-center display-4 danger-color-dark rounded-lg" v-if="item.status==='Ocupado' ">
+                            <span class="col ">{{item.id}}</span> <br> <i class="fas fa-chair "></i><br> <span class="col ">{{item.status}}</span> <br> <button type="button" class="btn btn-primary" disabled>Seleccionar asiento</button></div>
+                        <div style="margin-bottom: 20px; margin-top: 20px; " class="mr-md-2 p-3  text-center display-4 success-color-dark rounded-lg " v-else>
+                            <span class="col ">{{item.id}}</span> <br> <i class="fas fa-chair "></i> <br> <span class="col ">{{item.status}}</span> <br> <button type="button" class="btn btn-primary" v-on:click="selectAsiento(item.id)">Seleccionar asiento</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="container  danger-color-dark p-3 rounded-pill text-white" v-else>
+            <div class="row justify-content-md-center ">
+                <div class="col-sm-12 display-4 text-center ">
+                    <i class="fas fa-search "></i>
+                </div>
+                <div class="col-sm-12 display-4 text-center ">
+                    {{asientos.data}}
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="modal fade" id="modalBuyForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h4 class="modal-title w-100 font-weight-bold">Realizar compra</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12 ">
+                            <h5 class="modal-title w-100 font-weight-bold">Asiento: <span id="idAsiento"></span> </h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body mx-3">
+                    <div class="md-form mb-5">
+                        <i class="fas fa-user prefix grey-text"></i>
+                        <input type="text" id="orangeForm-name" class="form-control validate">
+                        <label data-error="wrong" data-success="right" for="orangeForm-name">Nombre</label>
+                    </div>
+                    <div class="md-form mb-5">
+                        <i class="fas fa-envelope prefix grey-text"></i>
+                        <input type="email" id="orangeForm-email" class="form-control validate">
+                        <label data-error="wrong" data-success="right" for="orangeForm-email">Email</label>
+                    </div>
+
+                    <div class="md-form mb-4">
+                        <i class="fas fa-lock prefix grey-text"></i>
+                        <input type="password" id="orangeForm-pass" class="form-control validate">
+                        <label data-error="wrong" data-success="right" for="orangeForm-pass">Y</label>
+                    </div>
+
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button class="btn btn-deep-orange">Sign up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Footer -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js "></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js "></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue "></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1 "></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript " src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js "></script>
+    <!-- Bootstrap core JavaScript -->
+    <script src="assets/js/bootstrap.min.js "></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript " src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.18.0/js/mdb.min.js "></script>
+
+    <script src="assets/js/bootstrap-datepicker.js "></script>
+    <script src="assets/js/bootstrap-select.min.js "></script>
+    <script src="assets/js/i18n/defaults-es_ES.js "></script>
+    <script src="assets/locales/bootstrap-datepicker.es.min.js "></script>
+    <script src="assets/js/main.js "></script>
+
+
+
+
+</body>
+
+</html>

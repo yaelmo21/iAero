@@ -1,28 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="Spanish">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>iAero</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>iAero | vuelos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="fontawesome-5.13.0/css/all.css">
+    <link rel="stylesheet" href="assets/fontawesome-5.13.0/css/all.css">
     <!-- Google Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
-    <!-- Bootstrap core CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/bootstrap-datepicker.standalone.css">
     <!-- Material Design Bootstrap -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.18.0/css/mdb.min.css" rel="stylesheet">
-
-
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
-
-    <link rel="stylesheet" href="js/bootstrap-datepicker/css/bootstrap-datepicker3.css">
-    <script src="js/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-    <script src="js/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js"></script>
-
+    <link rel="stylesheet" href="assets/css/main.css">
 
 
 
@@ -52,7 +45,7 @@
             <ul class="navbar-nav mr-auto">
 
                 <li class="nav-item">
-                    <a class="nav-link" href="index"><i class="fas fa-home"></i><span class="col">Inicio</span></a>
+                    <a class="nav-link" href="index.html"><i class="fas fa-home"></i><span class="col">Inicio</span></a>
                 </li>
 
 
@@ -71,10 +64,10 @@
     <div class="p-4 mb-2 indigo text-white">
         <h3>Selecciona tu vuelo</h3>
     </div>
-    <div id="main1" v-if="vuelos.message === 'correct'">
+    <div id="vuelos" v-if="vuelos.message === 'correct'">
         <div class="list-group">
             <div v-for="item in vuelos.data">
-                <a href="#!" class="list-group-item list-group-item-action flex-column align-items-start  ">
+                <a v-bind:href="'asientos.html?id='+ item.idVuelo" class="list-group-item list-group-item-action flex-column align-items-start  ">
                     <div class="d-flex w-100 justify-content-between ">
                         <div class="container">
                             <div class="row">
@@ -122,10 +115,8 @@
 
 
 
-
-
     <!-- Footer -->
-    <footer class="page-footer font-small blue-gradient pt-1 " data-wow-delay="0.6s">
+    <footer class="page-footer font-small blue-gradient pt-1">
 
         <!-- Footer Elements -->
         <div class="container">
@@ -133,7 +124,7 @@
             <!-- Social buttons -->
             <ul class="list-unstyled list-inline text-center">
                 <li class="list-inline-item">
-                    <a class="btn-floating btn-fb mx-1" style="font-size: 20px;" href="#">
+                    <a class="btn-floating btn-fb mx-1" style="font-size: 20px;">
                         <i class="fab fa-github"></i>
                     </a>
                 </li>
@@ -146,7 +137,7 @@
 
         <!-- Copyright -->
         <div class="footer-copyright text-center py-3">© 2020 Copyright:
-            <a href="https://mdbootstrap.com/"> Yael Ruiz Pucheta</a>
+            <a href="#"> Yael Ruiz Pucheta</a>
         </div>
         <!-- Copyright -->
 
@@ -155,6 +146,10 @@
 
 
 
+    <div class="text-center">
+        <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalRegisterForm">Launch
+    Modal Register Form</a>
+    </div>
 
 
 
@@ -167,19 +162,25 @@
 
 
 
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-    <!-- JQuery -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- Footer -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
     <!-- Bootstrap tooltips -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
     <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.18.0/js/mdb.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
-    <script src="js/actions.js"></script>
-    <script src="js/vuelos.js"></script>
+
+    <script src="assets/js/bootstrap-datepicker.js"></script>
+    <script src="assets/js/bootstrap-select.min.js"></script>
+    <script src="assets/js/i18n/defaults-es_ES.js"></script>
+    <script src="assets/locales/bootstrap-datepicker.es.min.js"></script>
+    <script src="assets/js/main.js "></script>
+
 
 
 

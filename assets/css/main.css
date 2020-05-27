@@ -1,0 +1,13 @@
+.row {
+    display: flex;
+    align-items: center;
+}
+
+.cuadrado {
+    width: 25vh;
+    max-width: 100px;
+    height: 25vh;
+    max-height: 100px;
+    position: relative;
+    background: red;
+}
