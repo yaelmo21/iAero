@@ -1,6 +1,7 @@
 ## :airplane: iAero
 
-Este es el consumo del Cliente Soap de la aerolínea [Link Github](https://github.com/yaelmo21/aerolinea)
+Este es el consumo del Cliente Soap de la aerolínea [Link Github SOAP](https://github.com/yaelmo21/aerolinea)
+,así como del servicio rest [Link Github REST](https://github.com/yaelmo21/rest-aerolinea)
 
 El proyecot esta realziado con los siguientes Frameworks
 
