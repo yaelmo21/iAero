@@ -6,12 +6,15 @@ $(document).ready(function() {
         case 'iAero':
             home();
             mensajeInicio();
+            verificar();
             break;
         case 'iAero | vuelos':
-            getVuelos()
+            getVuelos();
+            verificar();
             break;
         case 'iAero | Asientos':
             getAsientos();
+            verificar();
             break;
 
     }
@@ -102,6 +105,9 @@ let home = () => {
         todayHighlight: true,
         // startDate: new Date(),
     });
+
+
+
 }
 
 let vuelos = () => {
@@ -114,7 +120,7 @@ let vuelos = () => {
         $('#centralModalDanger').modal('show');
     } else {
         let json = JSON.stringify({ fecha: fecha, origin: origin, destino: destino });
-        $.cookie('json', `${json}`, { expires: 1, path: '/' });
+        $.cookie('json', `${json}`, { expires: 1, path: '/', sameSite: 'lax' });
         location.href = "vuelos.html";
 
     }
@@ -150,3 +156,24 @@ let getUrlParameter = function getUrlParameter(sParam) {
         }
     }
 };
+
+function verificar() {
+    axios.post(URL_SERVICE + '/verificar', null, {
+            headers: {
+                'Authorization': window.localStorage.getItem('token'),
+            }
+        })
+        .then((response) => {
+            $('#createAccount').hide();
+            $('#logIn').hide();
+            var nombre = response.data.nombre.split(' ');
+            var google = response.data.google;
+            $.cookie('google', google, { path: '/', sameSite: 'lax' });
+            $('#usuarioBtn').prepend(nombre[0]);
+            $('#nombreMenu').prepend(nombre[0]);
+
+        })
+        .catch((error) => {
+            $('#accountBtn').hide();
+        });
+}
