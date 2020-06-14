@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>iAero | Asientos</title>
+    <title>iAero | Cuenta</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="assets/fontawesome-5.13.0/css/all.css">
@@ -16,11 +16,9 @@
     <!-- Material Design Bootstrap -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.18.0/css/mdb.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/main.css">
-
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <meta name="google-signin-client_id" content="178492123276-mnvd4qsl2d0fcbts8rqelgs525qm0isc.apps.googleusercontent.com">
 
-    <link rel="stylesheet" href="css/main.css">
 
 </head>
 
@@ -48,15 +46,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="index.html"><i class="fas fa-home"></i><span class="col">Inicio</span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="vuelos.html"><i class="fas fa-plane"></i><span class="col">Vuelos</span></a>
-                </li>
 
 
 
 
             </ul>
-
             <button id="accountBtn" class="btn btn-outline-white text-capitalize" type="button" data-toggle="modal" data-target="#fullHeightModalLeft"><i class="fas fa-user"></i> <span id="usuarioBtn" class="col"></span></button>
             <button id="createAccount" class="btn btn-outline-white" type="button" data-toggle="modal" data-target="#modalIniciarSesion"><i class="fas fa-user"></i> <span class="col"></span> Iniciar Sesión </button>
             <button id="logIn" class="btn btn-white" type="button" data-toggle="modal" data-target="#modalRegisterForm"><i class="fas fa-door-open"></i><span class="col"></span> Crear cuenta </button>
@@ -67,90 +61,91 @@
 
     </nav>
     <!--/.Navbar-->
-    <div class="p-4 mb-2 indigo text-white">
-        <h3>Selecciona tu asiento</h3>
-    </div>
 
-    <div id="asientos" class=" p-3" style="margin-top: 20px;">
-        <div v-if="asientos.message==='correct' ">
-            <div class="container ">
-                <div class="row row-cols-2 ">
 
-                    <div class="col text-white " v-for="item in asientos.data ">
-                        <div style="margin-bottom: 20px; margin-top: 20px;" class="mr-md-2 p-3 text-center display-4 danger-color-dark rounded-lg" v-if="item.status==='Ocupado' ">
-                            <span class="col ">{{item.codigo}}</span> <br> <i class="fas fa-chair "></i><br> <span class="col ">{{item.status}}</span> <br> <button type="button" class="btn btn-primary" disabled>Seleccionar asiento</button></div>
-                        <div style="margin-bottom: 20px; margin-top: 20px; " class="mr-md-2 p-3  text-center display-4 success-color-dark rounded-lg " v-else>
-                            <span class="col ">{{item.codigo}}</span> <br> <i class="fas fa-chair "></i> <br> <span class="col ">{{item.status}}</span> <br> <button type="button" class="btn btn-primary" v-on:click="selectAsiento(item)">Seleccionar asiento</button>
-                        </div>
-                    </div>
-                </div>
+
+    <div id="user">
+        <!-- Card -->
+        <div class="card text-center m-lg-5">
+
+            <!-- Card image -->
+            <div class="view overlay m-3">
+                <p class="display-3"><i class="fas fa-user"></i></p>
+                <a href="#!">
+                    <div class="mask rgba-white-slight"></div>
+                </a>
+            </div>
+
+            <!-- Card content -->
+            <div class="card-body">
+
+                <table class="table table-hover">
+
+                    <tbody>
+                        <tr>
+                            <th scope="row">Nombre</th>
+                            <td class="text-capitalize">{{user[0].nombre}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Email</th>
+                            <td>{{user[0].email}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Código único de usuario</th>
+                            <td>{{user[0]._id}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Vinculado con Google</th>
+                            <td>{{(user[0].google == 'true')?'Si':'No'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
             </div>
 
         </div>
-
-        <div class="container  danger-color-dark p-3 rounded-pill text-white" v-else>
-            <div class="row justify-content-md-center ">
-                <div class="col-sm-12 display-4 text-center ">
-                    <i class="fas fa-search "></i>
-                </div>
-                <div class="col-sm-12 display-4 text-center ">
-                    {{asientos.data}}
-                </div>
-            </div>
-
-        </div>
-
+        <!-- Card -->
     </div>
 
 
 
-    <div class="modal fade" id="modalBuyForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header text-center">
-                    <h4 class="modal-title w-100 font-weight-bold">Realizar compra</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-                </div>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-12 ">
-                            <h5 class="modal-title w-100 font-weight-bold">Asiento: <span id="codigoAsiento"></span> </h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-body mx-3">
-                    <div class="md-form mb-5">
-                        <i class="fas fa-user prefix grey-text"></i>
-                        <input type="text" id="nombreFormBuy" class="form-control validate text-capitalize">
-                        <label data-error="wrong" data-success="right" for="nombreFormBuy">Nombre</label>
-                    </div>
-                    <div class="md-form mb-5">
-                        <i class="fas fa-envelope prefix grey-text"></i>
-                        <input type="email" id="emailFormBuy" class="form-control validate">
-                        <label data-error="wrong" data-success="right" for="emailFormBuy">Email</label>
-                    </div>
 
-                    <div class="md-form mb-4">
-                        <i class="fas fa-phone-alt prefix grey-text"></i>
-                        <input type="text" id="phoneFormBuy" class="form-control validate">
-                        <label data-error="wrong" data-success="right" for="phoneFormBuy">Teléfono</label>
-                    </div>
-                    <div class="d-flex justify-content-center text-primary">
-                        <div id="spinnerbuy" class="spinner-border" role="status">
-                            <span class="sr-only">Loading...</span>
-                        </div>
-                    </div>
 
-                </div>
-                <div class="modal-footer d-flex justify-content-center">
-                    <button onclick="buyTicket()" class="btn btn-deep-orange">Realizar compra</button>
-                </div>
-            </div>
+
+
+
+
+
+
+
+    <!-- Footer -->
+    <footer class="page-footer font-small blue-gradient pt-1 fixed-bottom">
+
+        <!-- Footer Elements -->
+        <div class="container">
+
+            <!-- Social buttons -->
+            <ul class="list-unstyled list-inline text-center">
+                <li class="list-inline-item">
+                    <a class="btn-floating btn-fb mx-1" style="font-size: 20px;" href="#" onclick="window.open('https://github.com/yaelmo21/iAero', '_blank');">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </li>
+
+            </ul>
+            <!-- Social buttons -->
+
         </div>
-    </div>
+        <!-- Footer Elements -->
 
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">© 2020 Copyright:
+            <a href="#"> Yael Ruiz Pucheta</a>
+        </div>
+        <!-- Copyright -->
+
+    </footer>
+    <!-- Footer -->
 
 
     <div class="modal fade" id="modalIniciarSesion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -321,7 +316,7 @@
                 </div>
                 <div class="modal-body text-center ">
                     <div class="list-group text-left">
-                        <a href="account.html" class="list-group-item list-group-item-action ">Mi cuenta</a>
+
                         <a href="buys.html" class="list-group-item list-group-item-action">Mis compras </a>
 
 
@@ -342,102 +337,10 @@
     </div>
 
 
-    <div class="modal fade" id="centralModalSuccessBuy" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-notify modal-info " role="document">
-            <!--Content-->
-            <div class="modal-content ">
-                <!--Header-->
-                <div class="modal-header">
-                    <p class="heading lead">Compra Completada</p>
-
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-         <span aria-hidden="true" class="white-text">&times;</span>
-       </button>
-                </div>
-
-                <!--Body-->
-                <div class="modal-body">
-                    <div class="text-center">
-                        <i class="fas fa-check fa-4x mb-3 animated rotateIn"></i>
-                    </div>
-
-                    <table class="table">
-
-                        <tbody>
-                            <tr>
-                                <th scope="row">Origen </th>
-                                <td id="origenSuccess"></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Destino </th>
-                                <td id="destinoSuccess"></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Nombre</th>
-                                <td class="text-capitalize" id="nombreSuccess"></td>
-
-                            </tr>
-                            <tr>
-                                <th scope="row">Email</th>
-                                <td id="emailSuccess"></td>
-
-                            </tr>
-                            <tr>
-                                <th scope="row">Código de asiento</th>
-                                <td id="codigoAsientoSuccess"></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Fecha de salida</th>
-                                <td id="fechaSuccess"></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Hora de salida</th>
-                                <td id="horaSalidaSuccess"></td>
-                            </tr>
 
 
-                        </tbody>
-                    </table>
-                </div>
-
-                <!--Footer-->
-                <div class="modal-footer justify-content-center">
-                    <a type="button" class="btn btn-outline-primary waves-effect" data-dismiss="modal" onclick=" location.href = 'buys.html' ">Aceptar</a>
-                </div>
-            </div>
-            <!--/.Content-->
-        </div>
-    </div>
 
 
-    <!-- Footer -->
-    <footer class="page-footer font-small blue-gradient pt-1 ">
-
-        <!-- Footer Elements -->
-        <div class="container">
-
-            <!-- Social buttons -->
-            <ul class="list-unstyled list-inline text-center">
-                <li class="list-inline-item">
-                    <a class="btn-floating btn-fb mx-1" style="font-size: 20px;" href="#" onclick="window.open('https://github.com/yaelmo21/iAero', '_blank');">
-                        <i class="fab fa-github"></i>
-                    </a>
-                </li>
-
-            </ul>
-            <!-- Social buttons -->
-
-        </div>
-        <!-- Footer Elements -->
-
-        <!-- Copyright -->
-        <div class="footer-copyright text-center py-3">© 2020 Copyright:
-            <a href="#"> Yael Ruiz Pucheta</a>
-        </div>
-        <!-- Copyright -->
-
-    </footer>
-    <!-- Footer -->
 
 
 
@@ -471,9 +374,7 @@
     <script src="assets/js/main.js "></script>
     <script src="assets/js/login.js "></script>
     <script src="assets/js/logout.js "></script>
-    <script src="assets/js/buy.js "></script>
     <script src="assets/js/createAccount.js "></script>
-
 
 
 

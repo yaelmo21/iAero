@@ -16,6 +16,15 @@ $(document).ready(function() {
             getAsientos();
             verificar();
             break;
+        case 'iAero | Compras':
+            verificar();
+            recuperaCompras();
+            break;
+        case 'iAero | Cuenta':
+            verificar();
+            recuperaCuenta();
+            break;
+
 
     }
 
@@ -26,6 +35,8 @@ $(document).ready(function() {
 
 
 });
+
+var asientoSelect = {};
 
 let getVuelos = () => {
 
@@ -62,6 +73,7 @@ let getAsientos = () => {
             recuperarPost: function() {
                 this.$http.post('providers/soap-connection.php', { metodo: 1, id: getUrlParameter('id') }).then(function(respuesta) {
                     this.asientos = respuesta.data;
+
                 });
             }
         }
@@ -88,23 +100,49 @@ let mensajeInicio = () => {
 }
 
 
-let selectAsiento = (id) => {
-    console.log(id);
+let selectAsiento = (asiento) => {
 
-    $('#modalBuyForm').modal('show');
-    let idAsiento = document.getElementById("idAsiento");
-    idAsiento.innerHTML = id;
+    axios.post(URL_SERVICE + '/verificar', null, {
+            headers: {
+                'Authorization': window.localStorage.getItem('token'),
+            }
+        })
+        .then((response) => {
+            asientoSelect = {
+                id: asiento.id,
+                codigo: asiento.codigo,
+                status: asiento.status
+            };
+            var usuario = response.data;
+
+            $('#nombreFormBuy').val(usuario.nombre);
+            $('#emailFormBuy').val(usuario.email);
+            $('#codigoAsiento').prepend(asiento.codigo);
+
+            $('#modalBuyForm').modal('show');
+
+        })
+        .catch((error) => {
+            window.localStorage.removeItem('token');
+            $('#modalIniciarSesion').modal('show');
+            selectAsiento(id);
+        });
+
+
 
 }
 let home = () => {
+    $('#alertaVuelos').hide();
     $('#datepicker').datepicker({
         language: "es",
         todayBtn: "linked",
         format: "dd/mm/yyyy",
         multidate: false,
         todayHighlight: true,
-        // startDate: new Date(),
+        startDate: new Date(),
+
     });
+    $('#datepicker').datepicker("setDate", new Date());
 
 
 
@@ -118,6 +156,9 @@ let vuelos = () => {
 
     if (fecha == null || origin === 'Origen' || destino == 'Destino') {
         $('#centralModalDanger').modal('show');
+    } else if (origin === destino) {
+        $('#alertaVuelos').html('').prepend('El origen y destino no pueden ser la misma ciudad');
+        $('#alertaVuelos').show(200);
     } else {
         let json = JSON.stringify({ fecha: fecha, origin: origin, destino: destino });
         $.cookie('json', `${json}`, { expires: 1, path: '/', sameSite: 'lax' });
@@ -129,18 +170,7 @@ let vuelos = () => {
 
 
 
-function recuperarFecha(fechamysql) {
-    const fecha_final = fechamysql;
-    const [year, month, day] = [...fecha_final.split('-')];
-    const monthIndex = month - 1;
 
-    var fecha = new Date(year, monthIndex, day);
-    var diasSemana = new Array('Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado');
-    var meses = new Array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
-    var fechaString = diasSemana[fecha.getDay()] + " " + fecha.getDate() + " de " + meses[fecha.getMonth()] + " de " + fecha.getFullYear();
-
-    return fechaString;
-}
 
 let getUrlParameter = function getUrlParameter(sParam) {
     var sPageURL = window.location.search.substring(1),
@@ -172,8 +202,82 @@ function verificar() {
             $('#usuarioBtn').prepend(nombre[0]);
             $('#nombreMenu').prepend(nombre[0]);
 
+
         })
         .catch((error) => {
             $('#accountBtn').hide();
+            window.localStorage.removeItem('token');
         });
+}
+
+function recuperaCompras() {
+
+    var token = window.localStorage.getItem('token');
+
+    if (token) {
+        $('#notToken').hide();
+        var token = window.localStorage.getItem('token')
+        new Vue({
+            el: '#buys',
+            created: function() {
+                this.recuperarPost();
+            },
+            data: {
+                compras: []
+            },
+            methods: {
+                recuperarPost: function() {
+                    this.$http.get(URL_SERVICE + '/compras', {
+                        headers: {
+                            'Authorization': token,
+                        }
+                    }).then(function(respuesta) {
+                        this.compras = respuesta.data;
+
+                    }).catch((error) => {
+                        console.log(error.body.err);
+                    });
+                }
+            }
+        });
+    } else {
+
+        $('#modalIniciarSesion').modal('show');
+    }
+}
+
+function recuperaCuenta() {
+
+    var token = window.localStorage.getItem('token');
+
+    if (token) {
+        $('#notToken').hide();
+        var token = window.localStorage.getItem('token')
+        new Vue({
+            el: '#user',
+            created: function() {
+                this.recuperarPost();
+            },
+            data: {
+                user: []
+            },
+            methods: {
+                recuperarPost: function() {
+                    this.$http.get(URL_SERVICE + '/usuario', {
+                        headers: {
+                            'Authorization': token,
+                        }
+                    }).then(function(respuesta) {
+                        this.user = respuesta.data.user;
+
+                    }).catch((error) => {
+                        console.log(error.body.err);
+                    });
+                }
+            }
+        });
+    } else {
+
+        $('#modalIniciarSesion').modal('show');
+    }
 }

@@ -81,7 +81,8 @@
                         <div class="col-sm-12">
                             <select id="origin" class="custom-select custom-select-sm">
                                 <option selected>Origen</option>
-                                <option value="Ciudad de Mexico, Mexico">Ciudad de México, México</option>
+                                <option value="CDM-MX">Ciudad de México, México</option>
+                                <option value="NYC-EU">New York, Estados Unidos</option>
                             </select>
                         </div>
                     </div>
@@ -98,7 +99,8 @@
                         <div class="col-sm-12">
                             <select id="destino" class="custom-select custom-select-sm">
                                 <option selected>Destino</option>
-                                <option value="Monterrey, Nuevo Leon Mexico">Monterrey, Nuevo León México</option>
+                                <option value="NYC-EU">New York, Estados Unidos</option>
+                                <option value="CDM-MX">Ciudad de México, México</option>
                             </select>
                         </div>
                     </div>
@@ -113,7 +115,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <input id="datepicker" class="form-control text-center" value="20/05/2020" placeholder="dd-mm-aaaa" name="fecha" />
+                        <input id="datepicker" class="form-control text-center" placeholder="dd-mm-aaaa" name="fecha" />
                     </div>
                 </div>
             </div>
@@ -121,6 +123,9 @@
         <div class="row justify-content-center text-center" style="margin-top: 20px;">
             <div class="col-sm-12">
                 <button type="button" class="btn btn-primary" onclick="vuelos()"><i class="fas fa-search"></i> Buscar Viaje</button>
+            </div>
+            <div id="alertaVuelos" class="col-sm-12 alert alert-danger" role="alert">
+
             </div>
         </div>
     </div>
@@ -171,7 +176,7 @@
             <!-- Social buttons -->
             <ul class="list-unstyled list-inline text-center">
                 <li class="list-inline-item">
-                    <a class="btn-floating btn-fb mx-1" style="font-size: 20px;">
+                    <a class="btn-floating btn-fb mx-1" style="font-size: 20px;" href="#" onclick="window.open('https://github.com/yaelmo21/iAero', '_blank');">
                         <i class="fab fa-github"></i>
                     </a>
                 </li>
@@ -364,8 +369,8 @@
                 </div>
                 <div class="modal-body text-center ">
                     <div class="list-group text-left">
-                        <a href="#!" class="list-group-item list-group-item-action ">Mi cuenta</a>
-                        <a href="#!" class="list-group-item list-group-item-action">Mis compras </a>
+                        <a href="account.html" class="list-group-item list-group-item-action ">Mi cuenta</a>
+                        <a href="buys.html" class="list-group-item list-group-item-action">Mis compras </a>
 
 
                     </div>
@@ -405,6 +410,7 @@
     <script src="assets/js/i18n/defaults-es_ES.js"></script>
     <script src="assets/locales/bootstrap-datepicker.es.min.js"></script>
     <script src="assets/js/config/config.js "></script>
+    <script src="assets/js/utils.js"></script>
     <script src="assets/js/main.js "></script>
     <script src="assets/js/login.js "></script>
     <script src="assets/js/logout.js "></script>

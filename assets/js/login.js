@@ -35,11 +35,15 @@ $('#iniciarSesionBtn').click(function() {
                 $('#createAccount').hide();
                 $('#logIn').hide();
                 $('#accountBtn').show();
+                recuperaCompras();
                 verificar();
 
             })
             .catch((error) => {
+                spinnerLoadingLogin.hide(200);
                 console.log(error);
+                (alertaLogin.is(':hidden')) ? alertaLogin.show(200): null;
+                mensajeErrorLogin.html('').prepend(error.response.data.err.message);
             });
     }
 

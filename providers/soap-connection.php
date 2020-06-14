@@ -29,13 +29,14 @@
 
     function getAsientos($id){
         global $soapClient;
-        $parametros = array('idVuelo' => $id);;
+        $parametros = array('idVuelo' => $id);
         $response = $soapClient->call("Asientos", array($parametros));
         if (!isset($response['alert'])){
             $dataResponse = array('message'=>'correct', 'data'=>$response['asiento']);
         }else{
             $dataResponse = array('message'=>'fail', 'data'=>$response['alert']);
         }
+       
 		header('Content-type: application/json; charset=utf-8');
 		echo json_encode($dataResponse);
 
